@@ -306,9 +306,8 @@ int main(int argc, char * argv[]){
 
 			}
 
-
 			if (strcmp(parsed[0],"cd")==0){
-				execl("/home/parthiv9221/Desktop/Assignment2/cd","/home/parthiv9221/Desktop/Assignment2/cd",parsed[0],parsed[1],NULL);
+				execl("/home/parthiv9221/Desktop/Assignment2/cd","/home/parthiv9221/Desktop/Assignment2/cd",parsed[1],NULL,NULL);
 			}
 
 
@@ -339,3 +338,4 @@ int main(int argc, char * argv[]){
 	return 0;
 
 }
+
