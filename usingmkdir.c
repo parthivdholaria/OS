@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <sys/stat>
+#include <sys/stat.h>
 
 
 int main(int argc,char * argv[]){
 
 	if (argc<=1){
-		printf("Few arguments given give atleast 2 arguments!")
+		printf("Few arguments given give atleast 2 arguments!");
 		return 0;
 	}
 
@@ -18,7 +18,7 @@ int main(int argc,char * argv[]){
 		int ret=mkdir(directory,0777);
 
 		if (ret==-1){
-			printf("Failed to create to directory!")
+			printf("Failed to create to directory!");
 			return 0;
 		}
 	}
