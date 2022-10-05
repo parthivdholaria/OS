@@ -306,8 +306,21 @@ int main(int argc, char * argv[]){
 
 			}
 
+
 			if (strcmp(parsed[0],"cd")==0){
 				execl("/home/parthiv9221/Desktop/Assignment2/cd","/home/parthiv9221/Desktop/Assignment2/cd",parsed[1],NULL,NULL);
+			}
+
+
+			if (strcmp(parsed[0],"date")==0){
+				if(strcmp(parsed[1],"+%B")==0){
+					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",parsed[1],NULL,NULL);
+				}
+
+				else if (strcmp(parsed[1],"+%Y")==0){
+					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",parsed[1],NULL,NULL);
+
+				}
 			}
 
 
@@ -338,4 +351,3 @@ int main(int argc, char * argv[]){
 	return 0;
 
 }
-
