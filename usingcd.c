@@ -9,6 +9,6 @@
 int main(int argc, char * argv[]){
     char path[1000];
     chdir("..");
-    printf("%s\n",getcwd(s,100));
+    printf("%s\n",getcwd(path,1000));
     return 0;
 }
