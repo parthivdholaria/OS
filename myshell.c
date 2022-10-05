@@ -276,7 +276,7 @@ int main(int argc, char * argv[]){
 
 
 
-			if (strcmp(parsed[0],"ls")==0){
+			else if (strcmp(parsed[0],"ls")==0){
 
 				execl("/home/parthiv9221/Desktop/Assignment2/ls","/home/parthiv9221/Desktop/Assignment2/ls",NULL,NULL,NULL);
 
@@ -284,13 +284,13 @@ int main(int argc, char * argv[]){
 
 
 
-			if (strcmp(parsed[0],"cat")==0){
+			else if (strcmp(parsed[0],"cat")==0){
 
 				execl("/home/parthiv9221/Desktop/Assignment2/cat","/home/parthiv9221/Desktop/Assignment2/cat",parsed[1],NULL,NULL);
 
 			}
 			
-			if (strcmp(parsed[0],"echo")==0){
+			else if (strcmp(parsed[0],"echo")==0){
 				if(strcmp(parsed[1],"-e")==0){
 					execl("/home/parthiv9221/Desktop/Assignment2/echo","/home/parthiv9221/Desktop/Assignment2/echo",parsed[1],parsed[2],NULL);
 				}
@@ -306,21 +306,19 @@ int main(int argc, char * argv[]){
 
 			}
 
-
-			if (strcmp(parsed[0],"cd")==0){
+			else if (strcmp(parsed[0],"cd")==0){
 				execl("/home/parthiv9221/Desktop/Assignment2/cd","/home/parthiv9221/Desktop/Assignment2/cd",parsed[1],NULL,NULL);
 			}
 
+			else if (strcmp(parsed[0],"date")==0){
+				if(strcmp(parsed[1],"+%B")==0 || strcmp(parsed[1],"+%Y")==0){
 
-			if (strcmp(parsed[0],"date")==0){
-				if(strcmp(parsed[1],"+%B")==0){
 					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",parsed[1],NULL,NULL);
 				}
-
-				else if (strcmp(parsed[1],"+%Y")==0){
-					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",parsed[1],NULL,NULL);
-
+				else{
+					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",NULL,NULL,NULL);	
 				}
+				
 			}
 
 
@@ -351,3 +349,4 @@ int main(int argc, char * argv[]){
 	return 0;
 
 }
+
