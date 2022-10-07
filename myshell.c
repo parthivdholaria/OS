@@ -268,8 +268,10 @@ int main(int argc, char * argv[]){
 
 
 			if(strcmp(parsed[0],"pwd")==0){
-
-				execl("/home/parthiv9221/Desktop/Assignment2/pwd","/home/parthiv9221/Desktop/Assignment2/pwd",NULL,NULL,NULL);	
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/pwd");
+				execl(buffpath,buffpath,NULL,NULL,NULL);	
 
 			}
 
@@ -277,11 +279,15 @@ int main(int argc, char * argv[]){
 
 			else if (strcmp(parsed[0],"ls")==0){
 
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"ls");
+
 				if (strcmp(parsed[1],"-l")==0 || strcmp(parsed[1],"-a")==0){
-					execl("/home/parthiv9221/Desktop/Assignment2/ls","/home/parthiv9221/Desktop/Assignment2/ls",parsed[1],NULL,NULL);
+					execl(buffpath,buffpath,parsed[1],NULL,NULL);
 				}
 				else{
-					execl("/home/parthiv9221/Desktop/Assignment2/ls","/home/parthiv9221/Desktop/Assignment2/ls",NULL,NULL,NULL);	
+					execl(buffpath,buffpath,NULL,NULL,NULL);	
 				}
 
 			}
@@ -290,20 +296,29 @@ int main(int argc, char * argv[]){
 
 			else if (strcmp(parsed[0],"cat")==0){
 
-				execl("/home/parthiv9221/Desktop/Assignment2/cat","/home/parthiv9221/Desktop/Assignment2/cat",parsed[1],NULL,NULL);
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/cat");
+
+				execl(buffpath,buffpath,parsed[1],NULL,NULL);
 
 			}
 			
 			else if (strcmp(parsed[0],"echo")==0){
+
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/echo");
+
 				if(strcmp(parsed[1],"-e")==0){
-					execl("/home/parthiv9221/Desktop/Assignment2/echo","/home/parthiv9221/Desktop/Assignment2/echo",parsed[1],parsed[2],NULL);
+					execl(buffpath,buffpath,parsed[1],parsed[2],NULL);
 				}
 
 				else if (strcmp(parsed[1],"-n")==0){
-					execl("/home/parthiv9221/Desktop/Assignment2/echo","/home/parthiv9221/Desktop/Assignment2/echo",parsed[1],parsed[2],NULL);
+					execl(buffpath,buffpath,parsed[1],parsed[2],NULL);
 				}
 				else{
-					execl("/home/parthiv9221/Desktop/Assignment2/echo","/home/parthiv9221/Desktop/Assignment2/echo",parsed[1],NULL,NULL);
+					execl(buffpath,buffpath,parsed[1],NULL,NULL);
 				}
 
 				
@@ -311,6 +326,8 @@ int main(int argc, char * argv[]){
 			}
 
 			else if (strcmp(parsed[0],"cd")==0){
+
+
 				if (chdir(parsed[1])!=0){
 					printf("%s","error occured!");
 				}
@@ -318,38 +335,55 @@ int main(int argc, char * argv[]){
 			}
 
 			else if (strcmp(parsed[0],"date")==0){
+
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/date");
+
+
 				if(strcmp(parsed[1],"+%B")==0 || strcmp(parsed[1],"+%Y")==0){
 
-					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",parsed[1],NULL,NULL);
+					execl(buffpath,buffpath,parsed[1],NULL,NULL);
 				}
 				else{
-					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",NULL,NULL,NULL);	
+					execl(buffpath,buffpath,NULL,NULL,NULL);	
 				}
 				
 			}
 
 			else if (strcmp(parsed[0],"mkdir")==0){
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/mkdir");
+
 				if (strcmp(parsed[1],"-p")==0 || strcmp(parsed[1],"-v")==0){
-					execl("/home/parthiv9221/Desktop/Assignment2/mkdir","/home/parthiv9221/Desktop/Assignment2/mkdir",parsed[1],parsed[2],NULL);	
+					execl(buffpath,buffpath,parsed[1],parsed[2],NULL);	
 				}
 				else{
-					execl("/home/parthiv9221/Desktop/Assignment2/mkdir","/home/parthiv9221/Desktop/Assignment2/mkdir",parsed[1],NULL,NULL);
+					execl(buffpath,buffpath,parsed[1],NULL,NULL);
 				}
 			}
 
 			else if (strcmp(parsed[0],"rm")==0){
 
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/rm");
+
 				if (strcmp(parsed[1],"-v")==0){
-					execl("/home/parthiv9221/Desktop/Assignment2/rm","/home/parthiv9221/Desktop/Assignment2/rm",parsed[1],parsed[2],NULL);
+					execl(buffpath,buffpath,parsed[1],parsed[2],NULL);
 				}
 				else{
-					execl("/home/parthiv9221/Desktop/Assignment2/rm","/home/parthiv9221/Desktop/Assignment2/rm",parsed[1],NULL,NULL);	
+					execl(buffpath,buffpath,parsed[1],NULL,NULL);	
 				}
 
 			}
 
 			else if (strcmp(parsed[0],"clear")==0){
-				execl("/home/parthiv9221/Desktop/Assignment2/clear","/home/parthiv9221/Desktop/Assignment2/clear",NULL,NULL,NULL);	
+				char buffpath[100];
+				getcwd(buffpath,sizeof(buffpath));
+				strcat(buffpath,"/clear");
+				execl(buffpath,buffpath,NULL,NULL,NULL);	
 			}
 
 		
