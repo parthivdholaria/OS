@@ -13,7 +13,6 @@
 
 
 
-
 void type_prompt(){
 
 	static bool first_time=true;
@@ -278,7 +277,12 @@ int main(int argc, char * argv[]){
 
 			else if (strcmp(parsed[0],"ls")==0){
 
-				execl("/home/parthiv9221/Desktop/Assignment2/ls","/home/parthiv9221/Desktop/Assignment2/ls",NULL,NULL,NULL);
+				if (strcmp(parsed[1],"-l")==0 || strcmp(parsed[1],"-a")==0){
+					execl("/home/parthiv9221/Desktop/Assignment2/ls","/home/parthiv9221/Desktop/Assignment2/ls",parsed[1],NULL,NULL);
+				}
+				else{
+					execl("/home/parthiv9221/Desktop/Assignment2/ls","/home/parthiv9221/Desktop/Assignment2/ls",NULL,NULL,NULL);	
+				}
 
 			}
 
@@ -319,6 +323,30 @@ int main(int argc, char * argv[]){
 					execl("/home/parthiv9221/Desktop/Assignment2/date","/home/parthiv9221/Desktop/Assignment2/date",NULL,NULL,NULL);	
 				}
 				
+			}
+
+			else if (strcmp(parsed[0],"mkdir")==0){
+				if (strcmp(parsed[1],"-p")==0 || strcmp(parsed[1],"-v")==0){
+					execl("/home/parthiv9221/Desktop/Assignment2/mkdir","/home/parthiv9221/Desktop/Assignment2/mkdir",parsed[1],parsed[2],NULL);	
+				}
+				else{
+					execl("/home/parthiv9221/Desktop/Assignment2/mkdir","/home/parthiv9221/Desktop/Assignment2/mkdir",parsed[1],NULL,NULL);
+				}
+			}
+
+			else if (strcmp(parsed[0],"rm")==0){
+
+				if (strcmp(parsed[1],"-v")==0){
+					execl("/home/parthiv9221/Desktop/Assignment2/rm","/home/parthiv9221/Desktop/Assignment2/rm",parsed[1],parsed[2],NULL);
+				}
+				else{
+					execl("/home/parthiv9221/Desktop/Assignment2/rm","/home/parthiv9221/Desktop/Assignment2/rm",parsed[1],NULL,NULL);	
+				}
+
+			}
+
+			else if (strcmp(parsed[0],"clear")==0){
+				execl("/home/parthiv9221/Desktop/Assignment2/clear","/home/parthiv9221/Desktop/Assignment2/clear",NULL,NULL,NULL);	
 			}
 
 
