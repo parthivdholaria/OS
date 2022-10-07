@@ -311,7 +311,10 @@ int main(int argc, char * argv[]){
 			}
 
 			else if (strcmp(parsed[0],"cd")==0){
-				execl("/home/parthiv9221/Desktop/Assignment2/cd","/home/parthiv9221/Desktop/Assignment2/cd",parsed[1],NULL,NULL);
+				if (chdir(parsed[1])!=0){
+					printf("%s","error occured!");
+				}
+				// execl("/home/parthiv9221/Desktop/Assignment2/cd","/home/parthiv9221/Desktop/Assignment2/cd",parsed[1],NULL,NULL);
 			}
 
 			else if (strcmp(parsed[0],"date")==0){
@@ -349,18 +352,21 @@ int main(int argc, char * argv[]){
 				execl("/home/parthiv9221/Desktop/Assignment2/clear","/home/parthiv9221/Desktop/Assignment2/clear",NULL,NULL,NULL);	
 			}
 
-
+		
 	
 
 		}
 
-
-
 		if (strcmp(parsed[0],"exit")==0){
 
-			break;
+				break;
 
-		}
+		}	
+
+
+
+
+		
 
 
 
