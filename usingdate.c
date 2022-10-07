@@ -3,10 +3,8 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <string.h>
-
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-	
 
 	if (argc==1){
 		time_t t ;
