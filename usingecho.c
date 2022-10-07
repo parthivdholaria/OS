@@ -30,13 +30,14 @@ int main(int argc, char const *argv[])
 	
 
 		if (strcmp(argv[1],"-e")==0){
-			
+
 			execl("/bin/echo","/bin/echo","-e",argv[2],NULL);
 		
 		}
 		else if (strcmp(argv[1],"-n")==0){
-			
-			execl("/bin/echo","/bin/echo","-n",argv[2],NULL);
+			char cmmd[100]="echo -n ";
+			strcat(cmmd,argv[2]);
+			system(cmmd);
 		
 		}
 	}
