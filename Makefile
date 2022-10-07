@@ -3,6 +3,7 @@ all: shell
 
 
 shell: myshell.c
+	gcc pwd.c -o pwd
 	gcc usingcat.c -o cat
 	gcc usingclr.c -o clear
 	gcc usingdate.c -o date
