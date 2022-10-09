@@ -86,6 +86,9 @@ int main(int argc, char * argv[]){
 	char home[100];
 	getcwd(home,sizeof(home));
 
+	char * match1[]={"pwd","ls","date"};
+	char * match2[]={"cat","echo","mkdir","rm"};
+
 
 	while (1){
 
@@ -110,79 +113,36 @@ int main(int argc, char * argv[]){
 
 		else{
 
-
-
-			if(strcmp(parsed[0],"pwd")==0){			
-				strcat(home,"/pwd");
-				execl(home,home,parsed[1],NULL,NULL);
-
-
-			}
-
-
-
-			else if (strcmp(parsed[0],"ls")==0){
-		
-				strcat(home,"/ls");
-				execl(home,home,parsed[1],NULL,NULL);
-
-
-			}
-
-
-			else if (strcmp(parsed[0],"cat")==0){
-
-
-				strcat(home,"/cat");
-
-				execl(home,home,parsed[1],parsed[2],NULL);
-
-			}
-			
-			else if (strcmp(parsed[0],"echo")==0){
-
-
-				strcat(home,"/echo");
-				execl(home,home,parsed[1],parsed[2],NULL);
-				
-
-			}
-
-			else if (strcmp(parsed[0],"cd")==0){
-
+			if (strcmp(parsed[0],"cd")==0){
 				if (chdir(parsed[1])!=0){
 					printf("%s","error occured!");
 				}
-			}
-
-			else if (strcmp(parsed[0],"date")==0){
-
-
-				strcat(home,"/date");
-				execl(home,home,parsed[1],NULL,NULL);
-
-				
-			}
-
-			else if (strcmp(parsed[0],"mkdir")==0){
-
-				strcat(home,"/mkdir");
-				execl(home,home,parsed[1],parsed[2],NULL);	
-
-			}
-
-			else if (strcmp(parsed[0],"rm")==0){
-
-
-				strcat(home,"/rm");
-				execl(home,home,parsed[1],parsed[2],NULL);	
-
 			}
 
 			else if (strcmp(parsed[0],"clear")==0){
 
 				strcat(home,"/clear");
 				execl(home,home,NULL,NULL,NULL);	
+			}
+
+			else{
+				for (int i=0;i<sizeof(match1)/sizeof(match1[0]);i++){
+					if (strcmp(match1[i],parsed[0])==0){
+						strcat(home,"/");
+						strcat(home,parsed[0]);
+						execl(home,home,parsed[1],NULL,NULL);
+
+					}
+				}
+
+				for (int i=0;i<sizeof(match2)/sizeof(match2[0]);i++){
+					if (strcmp(match2[i],parsed[0])==0){
+						strcat(home,"/");
+						strcat(home,parsed[0]);
+						execl(home,home,parsed[1],parsed[2],NULL);
+
+					}
+				}
 			}
 
 		}
