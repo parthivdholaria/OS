@@ -135,7 +135,7 @@ int main(int argc, char * argv[]){
 
 				strcat(home,"/cat");
 
-				execl(home,home,parsed[1],NULL,NULL);
+				execl(home,home,parsed[1],parsed[2],NULL);
 
 			}
 			
