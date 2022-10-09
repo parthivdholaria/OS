@@ -1,184 +1,106 @@
 #include <stdlib.h>
-
 #include <stdio.h>
-
 #include <string.h>
-
 #include <stdbool.h>
-
 #include <unistd.h>
-
 #include <sys/wait.h>
-
-
-
-
-void type_prompt(){
-
-	static bool first_time=true;
-
-	if (first_time){
-
-		const char* CLEAR_SCREEN_ANSI=" \e[1;1H\e[2J";
-
-		write(STDOUT_FILENO,CLEAR_SCREEN_ANSI,12);
-
-		first_time=false;
-
-	}
-
-
-
-	printf("Parthiv@Custom>>");
-
-}
-
-
-
-
-
-
-
 
 
 char ** parse(char * input){
 
-	int all_tokens_buffer = 100;
-
-	char ** all_tokens = malloc(all_tokens_buffer*sizeof(char *));
-
-	int all_tokens_counter=0;
+	int noofbuffer = 100;
+	char ** tokens = malloc(noofbuffer*sizeof(char *));
+	int tokens_counter=0;
 
 
 
-	int current_token_buffer = 1024;
+	int counttokenbuffer = 1024;
 
-	char * current_token=malloc(current_token_buffer*sizeof(char));
+	char * current_token=(char *)malloc(counttokenbuffer*sizeof(char));
 
 	int current_token_counter = 0;
 
     for (int i = 0; i < strlen(input); i++) {
 
-
-
     	char character = input[i];
-
-
 
         if (character == ' ') {
 
-
-
-            if (all_tokens_counter + 1 > all_tokens_buffer) {
-
-                all_tokens_buffer += 100;
-
-                all_tokens = realloc(all_tokens, all_tokens_buffer * sizeof(char*));
+            if (tokens_counter + 1 > noofbuffer) {
+                noofbuffer += 100;
+                tokens = realloc(tokens, noofbuffer * sizeof(char*));
 
             }
 
             
 
-            if (current_token_counter + 1 >= current_token_buffer) {
+            if (current_token_counter + 1 >= counttokenbuffer) {
 
-                current_token_buffer += 1024;
+                counttokenbuffer += 1024;
 
-                current_token = realloc(current_token, current_token_buffer);
+                current_token = realloc(current_token, counttokenbuffer);
 
             }
 
+            tokens[tokens_counter] = current_token;
+            tokens_counter++;
 
-
-            all_tokens[all_tokens_counter] = current_token;
-
-            all_tokens_counter++;
-
-
-
-            current_token = malloc(current_token_buffer * sizeof(char*));
-
+            current_token = malloc(counttokenbuffer * sizeof(char*));
             current_token_counter = 0;
-
-
 
         } else if (character == '\n') {
 
-            
-
-            if (all_tokens_counter + 2 > all_tokens_buffer) {
-
-                all_tokens_buffer += 100;
-
-                all_tokens = realloc(all_tokens, all_tokens_buffer * sizeof(char*));
+            if (tokens_counter + 2 > noofbuffer) {
+                noofbuffer += 100;
+                tokens = realloc(tokens, noofbuffer * sizeof(char*));
 
             }
 
-
-
-            if (current_token_counter + 1 > current_token_buffer) {
-
-                current_token_buffer += 1024;
-
-                current_token = realloc(current_token, current_token_buffer);
+            if (current_token_counter + 1 > counttokenbuffer) {
+                counttokenbuffer += 1024;
+                current_token = realloc(current_token, counttokenbuffer);
 
             }
 
             
 
-            all_tokens[all_tokens_counter] = current_token;
-
-            all_tokens_counter++;
-
+            tokens[tokens_counter] = current_token;
+            tokens_counter++;
 
 
-            all_tokens[all_tokens_counter] = NULL;
 
+            tokens[tokens_counter] = NULL;
             break;
-
 
 
         } else {
 
+            if (current_token_counter + 1 > counttokenbuffer) {
 
-
-            if (current_token_counter + 1 > current_token_buffer) {
-
-                current_token_buffer += 1024;
-
-                current_token = realloc(current_token, current_token_buffer);
+                counttokenbuffer += 1024;
+                current_token = realloc(current_token, counttokenbuffer);
 
             }
 
-
-
             current_token[current_token_counter] = character;
-
             current_token_counter++;
-
-
 
         }
 
-
-
     }
 
-
-
-    return all_tokens;	
-
-
+    return tokens;	
 
 }
+
+
 
 
 
 char * read_command(){
 
 	char * buffer;
-
 	size_t buffsize=1024;
-
 	size_t line;
 
 
@@ -188,44 +110,20 @@ char * read_command(){
 
 
 	if (buffer == NULL){
-
 		printf("%s","Error coudl not allocate memory\n");
-
 		exit(1);
-
-
-
 	}
-
-
-
-
 
 	line = getline(&buffer,&buffsize, stdin);
 
-
-
 	return buffer;
-
-
 
 }
 
 
 
-
-
-
-
-
-
 int main(int argc, char * argv[]){
 
-
-
-	printf("Parthiv@Custom");
-
-	printf("\n");
 
 
 	char home[100];
@@ -235,22 +133,11 @@ int main(int argc, char * argv[]){
 	while (1){
 
 
-
-		type_prompt();
+		printf("Parthiv@Custom>>");
 
 		char * input=read_command();
 
-
-
 		char ** parsed = parse(input);
-
-
-
-		// execute(parsed);
-
-
-
-
 
 		int rc = fork();
 
@@ -392,14 +279,7 @@ int main(int argc, char * argv[]){
 		}	
 
 
-
-
-		
-
-
-
 		free(input);
-
 		free(parsed);
 
 
