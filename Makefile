@@ -10,3 +10,6 @@ shell: myshell.c
 	gcc usingmkdir.c -o mkdir
 	gcc usingrm.c -o rm
 	gcc myshell.c -o shell
+
+clean:
+	rm clear rm ls cat date mkdir shell
