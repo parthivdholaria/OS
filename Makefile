@@ -9,7 +9,7 @@ shell: myshell.c
 	gcc usingls.c -o ls
 	gcc usingmkdir.c -o mkdir
 	gcc usingrm.c -o rm
-	gcc myshell.c -o shell
+	gcc myshell.c -o shell -Wno-stringop-overflow
 
 clean:
 	rm clear rm ls cat date mkdir shell
