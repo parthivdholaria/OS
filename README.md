@@ -37,6 +37,8 @@ Errors: None
 Arguments handled for pwd
 1) --version
 2) --help
+3) -L
+4) -p
 on the terminal type pwd to view the path
 Errors: thrown none
 
@@ -47,7 +49,6 @@ Arguments handled for cd
 4) --version
 on the terminal type cd name or cd .. or cd . or cd --help or cd --version
 Erros: throws error occured when it fails to change the given directory
-
 
 
 Arguments handled for rm
