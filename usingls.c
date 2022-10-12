@@ -32,12 +32,42 @@ int main(int argc,char *argv[]){
 
 	else if (argc==2){
 
-		if (strcmp(argv[1],"-l")==0){
-			system("ls -l");
+		DIR * currdir = opendir(".");
+
+		if (currdir==NULL){
+			printf("Could not Open the required directory!\n");
+		}
+
+		if (strcmp(argv[1],"-1")==0){
+
+			struct dirent* entity;
+			entity=readdir(currdir);
+			while (entity!=NULL){
+
+				printf("%s\n",entity->d_name);
+				entity=readdir(currdir);
+
+			}
+			printf("\n");
+
 		}
 
 		else if (strcmp(argv[1],"-a")==0){
-			system("ls -a");
+			
+			struct dirent* entity;
+			entity=readdir(currdir);
+
+
+			while (entity!=NULL){
+
+				printf("%s  ",entity->d_name);
+				entity=readdir(currdir);
+
+			}
+			printf("\n");
+		}
+		else{
+			printf("%s","Entered a unhandled argument!\n");
 		}
 
 	}
