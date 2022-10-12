@@ -109,6 +109,13 @@ int main(int argc, char * argv[]){
 		static char bufferpath[100];
 
 
+		if (strcmp(parsed[0],"exit")==0){
+
+			break;
+
+		}
+
+
 		if (flag){
 			pthread_t p1;
 			int rc;
@@ -175,6 +182,15 @@ int main(int argc, char * argv[]){
 						else if (strcmp("--version",parsed[1])==0){
 							printf("%s","current version of custom pwd is 1.0.1\n");
 						}
+
+						else if (strcmp(parsed[1],"-L")==0){
+							printf("%s\n",getcwd(bufferpath,sizeof(bufferpath)));
+
+						}
+						else if (strcmp(parsed[1],"-P")==0){
+							printf("%s\n",getcwd(bufferpath,sizeof(bufferpath)));
+
+						}
 						else{
 							printf("%s","Unhandled command\n");
 						}
@@ -230,16 +246,15 @@ int main(int argc, char * argv[]){
 					}
 				}
 
+		
+
 			}
 
-			if (strcmp(parsed[0],"exit")==0){
 
-					break;
 
-			}	
 
-			free(input);
-			free(parsed);
+		free(input);
+		free(parsed);
 
 		}
 	
