@@ -14,6 +14,15 @@ int main(int argc,char * argv[]){
 	}
 
 	else if (argc==2){
+
+
+		if (strcmp(argv[1],"--help")==0){
+			printf("%s","1) -help\n");
+			printf("%s","2) -v: to see detials of directory been created!\n");
+			return 0;
+		}
+
+
 		char * directory=argv[1];
 
 		int ret=mkdir(directory,0777);
@@ -25,13 +34,8 @@ int main(int argc,char * argv[]){
 	}
 
 	else if (argc==3){
-		if (strcmp(argv[1],"-p")==0){
-			char cmmd[100]="mkdir -p ";
-			strcat(cmmd,argv[2]);
-			system(cmmd);
-			int ret=mkdir(argv[2],0777);
-		}
-		else if (strcmp(argv[1],"-v")==0){
+
+		if (strcmp(argv[1],"-v")==0){
 			char * dir1=argv[2];
 
 			int ret1=mkdir(dir1,0777);
@@ -46,6 +50,11 @@ int main(int argc,char * argv[]){
 			}
 
 		}
+	}
+
+
+	else if (argc>3){
+		printf("%s","Too many arguments\n");
 	}
 
 
