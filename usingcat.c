@@ -25,9 +25,25 @@ int main(int argc,char * argv[]){
 
 	else if (argc==3){
 		if (strcmp(argv[1],"-n")==0){
-			char cmmd[100]="cat -n ";
-			strcat(cmmd,argv[2]);
-			system(cmmd);
+			
+			FILE * file;
+
+			file=fopen(argv[2],"r");
+			if (!file){
+				printf("%s no such file or directory\n",argv[2]);
+			}
+			else{
+				int j=0;
+				char line[1024];
+				while (fgets(line,sizeof(line),file)){
+						printf("%d %s",++j,line);
+				}
+				fclose(file);
+			}
+
+
+
+
 		}
 		else if (strcmp(argv[1],">")==0){
 			FILE * fptr=fopen(argv[2],"w");
@@ -36,6 +52,24 @@ int main(int argc,char * argv[]){
 				return 0;
 			}
 			printf("File created successfully\n");
+		}
+
+		else if (strcmp(argv[1],"-E")==0){
+			FILE * file;
+			file=fopen(argv[2],"r");
+			if (!file){
+				printf("%s no such file or directory\n",argv[2]);
+			}
+			else{
+				int j=0;
+				char line[1024];
+				while (fgets(line,sizeof(line),file)){
+					line[strlen(line)-1]='\0';
+					printf("%s%c\n",line,'$');
+				}
+				fclose(file);
+			}
+
 		}
 	}
 	 
