@@ -85,6 +85,7 @@ int main(int argc, char * argv[]){
 
 
 
+
 	while (1){
 
 
@@ -119,8 +120,162 @@ int main(int argc, char * argv[]){
 		if (flag){
 			pthread_t p1;
 			int rc;
-			rc = pthread_create(&p1, NULL, execute_via_thread, filter); assert(rc==0);		
-			rc=pthread_join(p1,NULL); assert(rc==0);
+
+
+			
+
+			if (strcmp(parsed[0],"ls")==0){
+				char new[]="./";
+				for (int i=0;i<count-1;i++){
+					strcat(new,parsed[i]);
+					strcat(new," ");
+				}
+				rc = pthread_create(&p1, NULL, execute_via_thread, new); assert(rc==0);		
+				rc=pthread_join(p1,NULL); assert(rc==0);
+
+			}
+
+			if (strcmp(parsed[0],"mkdir")==0){
+				char new[]="./";
+				for (int i=0;i<count-1;i++){
+					strcat(new,parsed[i]);
+					strcat(new," ");
+				}
+				rc = pthread_create(&p1, NULL, execute_via_thread, new); assert(rc==0);		
+				rc=pthread_join(p1,NULL); assert(rc==0);
+
+			}
+
+
+			if (strcmp(parsed[0],"date")==0){
+				char new[]="./";
+				for (int i=0;i<count-1;i++){
+					strcat(new,parsed[i]);
+					strcat(new," ");
+				}
+				rc = pthread_create(&p1, NULL, execute_via_thread, new); assert(rc==0);		
+				rc=pthread_join(p1,NULL); assert(rc==0);
+
+			}
+
+
+			if (strcmp(parsed[0],"rm")==0){
+				char new[]="./";
+				for (int i=0;i<count-1;i++){
+					strcat(new,parsed[i]);
+					strcat(new," ");
+				}
+				rc = pthread_create(&p1, NULL, execute_via_thread, new); assert(rc==0);		
+				rc=pthread_join(p1,NULL); assert(rc==0);
+
+			}
+
+			if (strcmp(parsed[0],"cat")==0){
+				char new[]="./";
+				for (int i=0;i<count-1;i++){
+					strcat(new,parsed[i]);
+					strcat(new," ");
+				}
+				rc = pthread_create(&p1, NULL, execute_via_thread, new); assert(rc==0);		
+				rc=pthread_join(p1,NULL); assert(rc==0);
+
+			}
+
+
+			if (strcmp(parsed[0],"cd")==0){
+
+					if (strcmp("--help",parsed[1])==0){
+							printf("%s","1) --help: to see the description of cd command\n");
+							printf("%s","2) --version: to see the current version\n");
+
+					}
+
+					else if (strcmp("--version",parsed[1])==0){
+						printf("%s","current version of custom cd is 1.0.1\n");
+					}
+					
+					if (chdir(parsed[1])!=0){
+						printf("%s","error occured!\n");
+					}
+				}
+
+
+				else if (strcmp(parsed[0],"clear")==0){
+
+					strcat(home,"/clear");
+					execl(home,home,NULL,NULL,NULL);	
+				}
+
+				else if (strcmp(parsed[0],"pwd")==0 || strcmp(parsed[0],"echo")==0){
+
+					if (strcmp(parsed[0],"pwd")==0){
+
+
+						if (count==2){
+							printf("%s\n",getcwd(bufferpath,sizeof(bufferpath)));
+						}
+
+						else if (strcmp("--help",parsed[1])==0){
+							printf("%s","1) --help: to see the description of pwd command\n");
+							printf("%s","2) --version: to see the current version\n");
+
+						}
+						else if (strcmp("--version",parsed[1])==0){
+							printf("%s","current version of custom pwd is 1.0.1\n");
+						}
+
+						else if (strcmp(parsed[1],"-L")==0){
+							printf("%s\n",getcwd(bufferpath,sizeof(bufferpath)));
+
+						}
+						else if (strcmp(parsed[1],"-P")==0){
+							printf("%s\n",getcwd(bufferpath,sizeof(bufferpath)));
+
+						}
+						else{
+							printf("%s","Unhandled command\n");
+						}
+					}
+
+					else if (strcmp("echo",parsed[0])==0){
+
+
+
+
+						if (strcmp(parsed[1],"-n")==0){
+							for (int i=2;i<count-1;i++){
+								printf("%s ",parsed[i]);
+							}
+						}
+						else if (strcmp(parsed[1],"--help")==0){
+							printf("%s","1) --help: to see help regarding help/echo command\n");
+							printf("%s","2) -n: used to avoid backslash n\n");
+						}
+						else if (count==3){
+							for (int i = 1; i < count-1; ++i)
+							{
+								printf("%s", parsed[i]);
+							}
+							printf("\n");
+						}
+						else{
+							printf("%s","Unhandled command\n");
+						}
+
+					}
+
+				}
+
+
+
+
+
+
+
+
+
+			// rc = pthread_create(&p1, NULL, execute_via_thread, filter); assert(rc==0);		
+			// rc=pthread_join(p1,NULL); assert(rc==0);
 		}
 
 		else{
