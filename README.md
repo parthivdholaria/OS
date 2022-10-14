@@ -4,6 +4,7 @@ This is for the assignment 2
 Arguments handled in ls are 
 1) -1
 2) -a
+3) -d
 ls: is used to print contents of the current directory
 On the terminal just type ls -1 or ls -a respectively to see them working
 error handled: prompts "Entered unhandled argument"
@@ -19,20 +20,24 @@ Errors: No errors thrown
 Arguments handled in date
 1) +%Y
 2) +%B
+3) -R
+4) -u
 On the terminal you can just type date +%Y to see which year or type date +%B to see which month is it
 Errors: No erros thrown
 
 
 Arguments handled in echo 
 1) -E
-2) -n
-On the terminal you can just type echo message or echo -e message1\nmessage2 or type echo -n message1\nmessage2
+2) --help
+Error: None
 
 Arguments handled for mkdir 
 1) -v
-2) --help
-On the terminal type mkdir name or mkdir -v name or mkdir --help
-Errors: None
+2) -m777
+3) --help
+On the terminal type mkdir name or mkdir -v name or mkdir --help or -m777
+Assumption: Only 777 permission is handled other permissions like 0575 or 757 are not handled 
+Errors: "Unhandled arguments" is thrown
 
 Arguments handled for pwd
 1) --version
