@@ -8,6 +8,12 @@
 
 int main(int argc,char * argv[]){
 
+
+
+	if (argc>3){
+		printf("%s","Too many arguments\n");
+	}
+
 	if (argc<=1){
 		printf("Few arguments given give atleast 2 arguments!\n");
 		return 0;
@@ -17,7 +23,7 @@ int main(int argc,char * argv[]){
 
 
 		if (strcmp(argv[1],"--help")==0){
-			printf("%s","1) -help\n");
+			printf("%s","1) --help\n");
 			printf("%s","2) -v: to see detials of directory been created!\n");
 			return 0;
 		}
@@ -50,12 +56,17 @@ int main(int argc,char * argv[]){
 			}
 
 		}
+
+		else if (strcmp(argv[1],"-m777")==0){
+			char * dir1=argv[2];
+			int ret1=mkdir(dir1,0777);
+		}
+		else{
+			printf("%s","unhandled command\n");
+		}
 	}
 
 
-	else if (argc>3){
-		printf("%s","Too many arguments\n");
-	}
 
 
 
