@@ -64,8 +64,8 @@ int main(int argc,char * argv[]){
 				int j=0;
 				char line[1024];
 				while (fgets(line,sizeof(line),file)){
-					line[strlen(line)-1]='\0';
-					printf("%s%c\n",line,'$');
+					line[strlen(line)-2]='$';
+					printf("%s",line);
 				}
 				fclose(file);
 			}
