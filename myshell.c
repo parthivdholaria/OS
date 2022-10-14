@@ -111,7 +111,7 @@ int main(int argc, char * argv[]){
 
 		if (strcmp(parsed[0],"exit")==0){
 
-			break;
+			exit(0);
 
 		}
 
@@ -199,22 +199,21 @@ int main(int argc, char * argv[]){
 					else if (strcmp("echo",parsed[0])==0){
 
 
-						if (count==2){
+
+
+						if (strcmp(parsed[1],"-n")==0){
+							for (int i=2;i<count;i++){
+								printf("%s ",parsed[i]);
+							}
+						}
+						else if (strcmp(parsed[1],"--help")==0){
+							printf("%s","1) --help: to see help regarding help/echo command\n");
+							printf("%s","2) -n: used to avoid backslash n\n");
+						}
+						else if (count==2){
 							for (int i = 1; i < count; ++i)
 							{
 								printf("%s", parsed[i]);
-							}
-							printf("\n");
-						}
-
-						else if (strcmp(parsed[1],"-n")==0){
-							for (int i=2;i<count;i++){
-								printf("%s ",parsed[i]);
-							}
-						}
-						else if (strcmp(parsed[1],"-E")==0){
-							for (int i=2;i<count;i++){
-								printf("%s ",parsed[i]);
 							}
 							printf("\n");
 						}
