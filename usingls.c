@@ -7,6 +7,8 @@
 
 int main(int argc,char *argv[]){
 
+	
+
 	if (argc==1){
 		DIR * currdir = opendir(".");
 		if (!currdir){
@@ -20,6 +22,11 @@ int main(int argc,char *argv[]){
 
 
 		while (entity!=NULL){
+
+			if ( strcmp(entity->d_name,".")==0 || strcmp(entity->d_name,"..")==0){
+				entity=readdir(currdir);
+				continue;
+			}
 
 			printf("%s  ",entity->d_name);
 			entity=readdir(currdir);
@@ -44,6 +51,11 @@ int main(int argc,char *argv[]){
 			entity=readdir(currdir);
 			while (entity!=NULL){
 
+				if ( strcmp(entity->d_name,".")==0 || strcmp(entity->d_name,"..")==0){
+					entity=readdir(currdir);
+					continue;
+				}
+
 				printf("%s\n",entity->d_name);
 				entity=readdir(currdir);
 
@@ -65,6 +77,11 @@ int main(int argc,char *argv[]){
 
 			}
 			printf("\n");
+		}
+
+		else if (strcmp(argv[1],"-d")==0){
+			printf("%s",".\n");
+			return 0;
 		}
 		else{
 			printf("%s","Entered a unhandled argument!\n");
