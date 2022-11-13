@@ -32,14 +32,11 @@ int main(){
 		time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
 		printf("%f\n",time);
 
-
-
 	}
 	else{printf("%s\n","Error");}
 
 
-	
-	
+	clock_gettime(CLOCK_REALTIME,&StartTime);
 	rc2=fork();
 
 	if (rc2==0){
@@ -52,12 +49,16 @@ int main(){
 	else if (rc2>0){
 	
 		wait(NULL);
+        clock_gettime(CLOCK_REALTIME,&EndTime);
+		time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
+		printf("%f\n",time);
 	
 	}
 
 	else{printf("%s\n","error");}
 
 
+	clock_gettime(CLOCK_REALTIME,&StartTime);
 	rc3=fork();
 
 	if (rc3==0){
@@ -69,16 +70,15 @@ int main(){
 	else if (rc3>0){
 		
 		wait(NULL);
+        clock_gettime(CLOCK_REALTIME,&EndTime);
+		time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
+		printf("%f\n",time);
 	
 	}
 
 	else{printf("%s\n","error!");}
 
-	
 
 	return 0;
-
-
-
 
 }
