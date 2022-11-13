@@ -1,0 +1,30 @@
+OS Q2 
+
+For copying a floating point 2d matrix we can think of it as a 1D array where each row of matrix will be treated as a 1D array. We can place
+each row of matrix side by side one another and the resulting structure will be a large one D array.
+
+We can access element from this New Data Structure by the following:
+
+element at i,j in 2d = New DataStructure[i*(No of Columns)+j]    where 0<= i <= No of rows    and 0<= j <=no of columns
+
+SO cpying of 2d array can be donw using one d array
+
+We first define a system call that takes source and destination along with the max number of columns and rows 
+
+we define a temperory buffer array in kernel space that is used to copy the data from the src to buffer array and then from buffer to 
+destination
+
+__copy_from_user(): takes in three paramteres destination , source and the number of bytes to copy which in our case is sizeof(float)*m*n
+
+__copy_to_user(): takes in three parameters destination, source and the number of bytes to copy which in our case is sizeof(float)*m*n
+
+on successfull execution I have used printk and written a message so that we can use sudo dmesg to verify whether our sytem call was invoked
+
+
+in our test program:
+  We declare a floating point array in my case I have shown example of 3*5 matrix. Not work for more than that. 
+  
+  then call our syscall and if the return status of that is -1 that means our system call was not invoked
+  else we call another function that checks whether the source and destination matrices are same 
+  
+  at last we type sudo dmesg to see whether message was invoked 
