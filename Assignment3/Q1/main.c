@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <string.h>
 
 
 void countA(){
@@ -51,278 +52,129 @@ void countC(){
 }
 
 
+void* f_A(){
 
-// clock start
-
-// thread  create calls f()
-// f_sched_other()
-// sets the scheduling
-// calls countA()
-
-// clockend ends
-
-//store the return values
+	// int priority = atoi(arg);
 
 
+    FILE *fptr=fopen("TimeDataA1.txt","a");
 
-void * f_A_RR(void * arg){
+    // struct sched_param param;
+	// param.sched_priority=priority;
+	// int ret=pthread_setschedparam(pthread_self(),SCHED_OTHER,&param);
 
-	pthread_t t1;
-
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t1,SCHED_RR,&param);
-
+    struct timespec StartTime, EndTime;
+	clock_gettime(CLOCK_REALTIME,&StartTime);
 	countA();
+    clock_gettime(CLOCK_REALTIME,&EndTime);
+	float time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
+    fprintf(fptr,"o %f\n",time);
+
+    fclose(fptr);
 
 	return NULL;
 
-}
-
-void * f_A_OTHER(void * arg){
-
-	pthread_t t1;
-
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t1,SCHED_OTHER,&param);
-
-	countA();
-
-	return NULL;
 
 }
 
-void * f_A_FIFO(void * arg){
 
-	pthread_t t1;
+void * f_B(){
 
-	int ret;
+
+	// int priority = atoi(arg);
 	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t1,SCHED_FIFO,&param);
 
-	countA();
 
-	return NULL;
+    FILE *fptr=fopen("TimeDataA1.txt","a");
 
-}
 
-void * f_B_RR(void * arg){
+    // struct sched_param param;
+	// param.sched_priority=priority;
+	// int ret=pthread_setschedparam(pthread_self(),SCHED_RR,&param);
 
-	pthread_t t2;
-
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t2,SCHED_RR,&param);
-
+    struct timespec StartTime, EndTime;
+	clock_gettime(CLOCK_REALTIME,&StartTime);
 	countB();
+    clock_gettime(CLOCK_REALTIME,&EndTime);
+	float time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
+    fprintf(fptr,"r %f\n",time);
+    fclose(fptr);
 
 	return NULL;
 
-}
-
-void * f_B_OTHER(void * arg){
-
-	pthread_t t2;
-
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t2,SCHED_OTHER,&param);
-
-	countB();
-
-	return NULL;
 
 }
 
-void * f_B_FIFO(void * arg){
+void * f_C(){
 
-	pthread_t t2;
-
-	int ret;
+	// int priority = atoi(arg);
 	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t2,SCHED_FIFO,&param);
-
-	countB();
-
-	return NULL;
-
-}
 
 
-void * f_C_RR(void * arg){
+    FILE *fptr=fopen("TimeDataA1.txt","a");
 
-	pthread_t t3;
+    // struct sched_param param;
+	// param.sched_priority=priority;
+	// int ret=pthread_setschedparam(pthread_self(),SCHED_FIFO,&param);
 
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t3,SCHED_RR,&param);
-
+    struct timespec StartTime, EndTime;
+	clock_gettime(CLOCK_REALTIME,&StartTime);
 	countC();
+    clock_gettime(CLOCK_REALTIME,&EndTime);
+	float time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
+    fprintf(fptr,"f %f\n",time);
+    fclose(fptr);
 
 	return NULL;
 
-}
-
-void * f_C_OTHER(void * arg){
-
-	pthread_t t3;
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t3,SCHED_OTHER,&param);
-
-	countC();
-
-	return NULL;
-
-}
-
-void * f_C_FIFO(void * arg){
-
-	pthread_t t3;
-
-	int ret;
-	
-	struct sched_param param;
-	param.sched_priority=0;
-	ret=pthread_setschedparam(t3,SCHED_FIFO,&param);
-
-	countC();
-
-	return NULL;
 
 }
 
 
 
-
-int main(int argc, char const *argv[])
+int main()
 {
 
-
-	float arr1[3];
-	float arr2[3];
-	float arr3[3];
-	
-	pthread_t t1,t2,t3;
-	int rc1,rc2,rc3;
-
-	float time;
-
-	//1
-	struct timespec StartTime, EndTime;
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc1=pthread_create(&t1,NULL,f_A_OTHER,NULL);
-	pthread_join(t1,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr1[0]=time;
-
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc2=pthread_create(&t2,NULL,f_B_RR,NULL);
-	pthread_join(t2,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr2[0]=time;
-
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc3=pthread_create(&t3,NULL,f_C_FIFO,NULL);
-	pthread_join(t3,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr3[0]=time;
-
-
-	//2
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc1=pthread_create(&t1,NULL,f_A_RR,NULL);
-	pthread_join(t1,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr1[1]=time;
-
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc2=pthread_create(&t2,NULL,f_B_FIFO,NULL);
-	pthread_join(t2,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr2[1]=time;
-
-	
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc3=pthread_create(&t3,NULL,f_C_OTHER,NULL);
-	pthread_join(t3,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr3[1]=time;
-
-	//3
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc1=pthread_create(&t1,NULL,f_A_FIFO,NULL);
-	pthread_join(t1,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr1[2]=time;
-
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc2=pthread_create(&t2,NULL,f_B_OTHER,NULL);
-	pthread_join(t2,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr2[2]=time;
-
-	
-	clock_gettime(CLOCK_REALTIME,&StartTime);
-	rc3=pthread_create(&t3,NULL,f_C_RR,NULL);
-	pthread_join(t3,NULL);
-	clock_gettime(CLOCK_REALTIME,&EndTime);
-	time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-	arr3[2]=time;
-
-
-
-
-	FILE * fptr;
-
-	fptr=fopen("TimeDataA1.txt","w");
-
-	for(int i=0;i<3;i++){
-		fprintf(fptr,"%f ",arr1[i]);
-	}
-
-	fprintf(fptr,"\n");
-	for(int i=0;i<3;i++){
-		fprintf(fptr,"%f ",arr2[i]);
-	}
-	fprintf(fptr,"\n");
-
-	for(int i=0;i<3;i++){
-		fprintf(fptr,"%f ",arr3[i]);
-	}
-	fprintf(fptr,"\n");
-
-
+    FILE * fptr=fopen("TimeDataA1.txt","w");
 	fclose(fptr);
 
+    pthread_t t1,t2,t3;
+    int rc1,rc2,rc3;
+
+	struct sched_param param1;
+	param1.sched_priority=0;
+
+	struct sched_param param2;
+	param2.sched_priority=0;
+
+	struct sched_param param3;
+	param3.sched_priority=0;
 
 
-	int rc=fork();
+	pthread_setschedparam(t1,SCHED_OTHER,&param1);
+	pthread_setschedparam(t2,SCHED_RR,&param2);
+	pthread_setschedparam(t3,SCHED_FIFO,&param3);
+
+
+
+
+    for (int i = 1; i < 11; i++)
+    {
+
+		
+        rc1=pthread_create(&t1,NULL,f_A,NULL);
+        rc2=pthread_create(&t2,NULL,f_B,NULL);
+        rc3=pthread_create(&t3,NULL,f_C,NULL);
+
+        pthread_join(t1,NULL);
+        pthread_join(t2,NULL);
+        pthread_join(t3,NULL);
+
+
+
+    }
+
+    int rc=fork();
 
 	if (rc==0){
 		system("./A1.sh");
@@ -333,7 +185,7 @@ int main(int argc, char const *argv[])
 	else{
 		printf("Error loading file\n");
 	}
+    
 
-
-	return 0;
+    return 0;
 }
