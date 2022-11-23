@@ -1,70 +1,108 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<unistd.h>
-#include<sys/wait.h>
-#include<string.h>
-#include<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <string.h>
+#include <time.h>
 
+int main(int argc, char const *argv[])
+{
 
-int main(){
+    FILE *fptr;
+    fptr = fopen("Q1_B_TimeReport.txt", "a");
 
+    char path[100];
+    getcwd(path, sizeof(path));
 
-	FILE * fptr;
-	fptr=fopen("Q1_B_TimeReport.txt","a");
+    pid_t rc1, rc2, rc3, waitpid;
+    float time;
 
+    struct timespec StartTime1, EndTime1, StartTime2, EndTime2, StartTime3, EndTime3;
 
-	char path[100];
-	getcwd(path,sizeof(path));
+    clock_gettime(CLOCK_REALTIME, &StartTime1);
 
+    rc1 = fork();
 
-	int rc1,rc2,rc3;
-	float time;
+    if (rc1 == 0)
+    {
 
-	struct timespec StartTime, EndTime;
-	clock_gettime(CLOCK_REALTIME,&StartTime);
+        struct sched_param p1;
+        sched_setscheduler(rc1, SCHED_OTHER, &p1);
+        strcat(path, "/processA.sh");
+        execl(path, "processA.sh", NULL, NULL, NULL);
+    }
+    else if (rc1 > 0)
+    {
 
-	rc1=fork();
+        clock_gettime(CLOCK_REALTIME, &StartTime2);
 
+        rc2 = fork();
 
-	if (rc1==0){
-		strcat(path,"/processA.sh");
-		execl(path,"processA.sh",NULL,NULL,NULL);
-	}
-	else if (rc1>0){	
-		wait(NULL);
+        if (rc2 == 0)
+        {
+            struct sched_param p2;
+            sched_setscheduler(rc2, SCHED_RR, &p2);
+            strcat(path, "/processB.sh");
+            execl(path, "processB.sh", NULL, NULL, NULL);
+        }
+        else if (rc2 > 0)
+        {
 
-		rc2=fork();
+            clock_gettime(CLOCK_REALTIME, &StartTime3);
 
-		if (rc2==0){
-			strcat(path,"/processB.sh");
-			execl(path,"processB.sh",NULL,NULL,NULL);
-		}
+            rc3 = fork();
 
-		else if (rc2>0){
-			wait(NULL);
+            if (rc3 == 0)
+            {
+                struct sched_param p3;
+                sched_setscheduler(rc3, SCHED_FIFO, &p3);
+                strcat(path, "/processC.sh");
+                execl(path, "processC.sh", NULL, NULL, NULL);
+            }
 
-			rc3=fork();
+            else if (rc3 > 0)
+            {
+            }
+        }
+    }
 
-			if (rc3==0){
-				strcat(path,"/processC.sh");
-				execl(path,"processC.sh",NULL,NULL,NULL);
-			}
-			else if (rc3>0){
-				wait(NULL);
-				clock_gettime(CLOCK_REALTIME,&EndTime);
-				time = (EndTime.tv_sec-StartTime.tv_sec)+(EndTime.tv_nsec-StartTime.tv_nsec)/1e9;
-				printf("%f\n",time);
-				fprintf(fptr,"%f\n",time);
-			}
-		}
+    waitpid = waitpid(-1, NULL, 0);
 
-	}
-	else{printf("%s\n","Error");}
+    while (waitpid != -1)
+    {
+        if (waitpid == rc1)
+        {
+            clock_gettime(CLOCK_REALTIME, &EndTime1);
+        }
+        else if (waitpid == rc2)
+        {
+            clock_gettime(CLOCK_REALTIME, &EndTime2);
+        }
+        else if (waitpid == rc3)
+        {
+            clock_gettime(CLOCK_REALTIME, &EndTime3);
+        }
+        else
+        {
+            waitpid = waitpid(-1, NULL, 0);
+        }
+    }
 
+    time = (EndTime1.tv_sec - StartTime1.tv_sec) + (EndTime1.tv_nsec - StartTime1.tv_nsec) / 1e9;
+    printf("%f\n", time);
+    fprintf(fptr, "%f\n", time);
 
+    time = (EndTime2.tv_sec - StartTime2.tv_sec) + (EndTime2.tv_nsec - StartTime2.tv_nsec) / 1e9;
+    printf("%f\n", time);
+    fprintf(fptr, "%f\n", time);
 
+    time = (EndTime3.tv_sec - StartTime3.tv_sec) + (EndTime3.tv_nsec - StartTime3.tv_nsec)/1e9;
+    printf("%f\n", time);
+    fprintf(fptr, "%f\n", time);
 
+    fclose();
 
-	return 0;
+    
 
+    return 0;
 }
