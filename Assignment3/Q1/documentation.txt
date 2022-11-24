@@ -1,0 +1,36 @@
+for the Q1.1 of Assignment3
+I firstly created three threads simultaneously that call their respective functions
+f_A, f_B, f_C inside which I am setting their priorities and their scheduling policy 
+using the C function--> pthread_setschedparam
+
+to change the priorities i am using the struct sched_param.
+
+logic: inside main loop 10 times and set the priority to i+50 
+        now as the the thread calls its function set the policy.
+        Now start the clock by using clock_gettime() and loop through 2^32 times
+        at the end of for loop end the clock time
+
+        using a file pointer write the time calculated to the a file in the format 
+        PRIORITY POLICY TIME 
+
+        now call python file using fork() and system().
+
+        Plot the histogram using matplotlib library.
+
+Outcome:
+        if a process is running inside the cpu and a higher priority process arrives 
+        then the scheduler prempts out the low priority process and the cpu is given to the higher 
+        priority process.
+
+        in this program we have given zero priority to sched_other, same priority to sched_rr and sched_fifo
+
+        since priority of RR and FIFO is higher, OTHER is always given the least priority 
+        and takes the most time.
+
+        amongst FIFO and RR, process of same priorities are executed in such a way that FIFO gets 
+        executed first and hence it takes the least time
+
+Graph:
+        on x-axis: priorities
+        on y-axis: time
+        
