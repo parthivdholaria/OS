@@ -45,9 +45,9 @@ x=np.arange(n)
 
 plt.figure(figsize=(12,12))
 
+plt.bar(x+0.5,f,width=0.25,label="SCHED_FIFO")
 plt.bar(x,o,width=0.25,label="SCHED_OTHER")
 plt.bar(x+0.25,r,width=0.25,label="SCHED_RR")
-plt.bar(x+0.5,f,width=0.25,label="SCHED_FIFO")
 plt.xticks(x+0.25/2,[51,52,53,54,55,56,57,58,59,60])
 plt.xlabel("Priorities")
 plt.ylabel("Time Taken")
