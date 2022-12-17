@@ -1,0 +1,52 @@
+C) Using the domain socket
+
+Logic: For the server:
+            1) remove an already existing server using remove()
+            2) create a socket using socket(). 
+                We will be using AF_UNIX socket to communicate between process on the same system.
+                SOCK_STREAM to ensure TCP/IP protocol for the transfer of data, zero for no flags.
+
+            3) prepare to bind(): it binds the socket to your system 
+
+            4) listen(): wait for the request from the client
+
+            5) accept(): accept the request sent by the client
+
+            6) now recieve the fifty random strings such that first you recieve the string 
+                followed by the number(indice) [done by using recv]
+
+                send back the highest index usng send back to the client
+            7) close the socket
+
+        For the client:
+            1) create the socket
+            2) prepare for the connect(): to connect to the socket
+            3) start the clock using clock_gettime()
+            4) generate the random string
+            5) send the data: first string and then indice
+            6) then recieve the highest indice print it
+            7) after all 50 strings have been send end the clock using clock_gettime()
+
+
+
+B) FIFO
+
+    the sender stores randomely generated strings in an array. FIFO is created usign mkfifo and given the name fifo_q2
+    Now we initialise two file descriptors one for sending and other for recieving.
+    Start the clock using clock_gettime.
+    Now open the fifo created using mkfifo using open system call.
+    Write first the integer that represents the index of the string
+    and then the string of length 7 is passed.
+    Close the file descriptors. Open the second file descriptor for reading.
+    use read() to read the highest id send by the reciever.
+    close the file descriptor of the read
+    This happens inside a loop runnning 50 times;
+
+    for the reciever first initialise two file descriptor.
+    open the file descriptor for recieving.
+    first recieve the index and then the string using read() and print the index and the string.
+    now close the fd and open another fd for sending back the highest id 
+    send using write and close the fd
+    
+
+
