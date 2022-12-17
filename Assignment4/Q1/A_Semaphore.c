@@ -55,7 +55,7 @@ void philosopher_eats(struct philosopher * philosopher){
 void philosopher_takesfork(struct philosopher * philosopher){
 
     
-    if ((philosopher->pos+1)==count){
+    if ((philosopher->pos+1)<count){
         sem_wait(philosopher->leftfork);
         sem_wait(philosopher->rightfork);
         printf("philosopher %d picked up the forks %d and %d\n",philosopher->pos+1,(philosopher->pos+4+1)%5,(philosopher->pos+1)%5);   
