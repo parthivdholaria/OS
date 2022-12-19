@@ -49,4 +49,14 @@ B) FIFO
     send using write and close the fd
     
 
-
+C) Shared memory:
+            Firstly the sender process creates the shared memory using shm open.
+            Then mmap is used to attach the shared segment to process.
+            then we use memcpy to copy the string into the shared region
+            process synchronization has been ensured using semaphore lock. used sem_wait before writing and used sem_post after writing
+            
+            On the readers end Firstly print the recieved data in the shared segment.
+            use sem_Wait before reading and sem_post after writing.
+            now create another shared region to send back the highest id recieved using memcpy
+            on the reciever end again use semaphore to ensure sync. 
+            Print the result written by reciever and release the lock.
