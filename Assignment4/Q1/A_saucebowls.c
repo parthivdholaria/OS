@@ -113,7 +113,7 @@ void * philosopher_utility(void * arg){
 int main(int argc, char const *argv[])
 {
     
-    sem_init(&bowl1,0,5);
+    sem_init(&bowl1,0,2);
 
     for (int i = 0; i < 5; i++)
     {
