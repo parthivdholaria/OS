@@ -1,0 +1,24 @@
+strict ordering:
+  1. created 5 threads each running once
+  2. each thread runs a function philospher_utility
+  3. in philospher utility the functions think(),eat(),take_fork(),place_fork() are used
+  4. To ensure syncronization pthread_mutex_lock has been used.
+  5. Counter variable is maintained and incremented each time philospher eats
+  6. since the thread runs 5 times and only once the count variable at the end must be 5
+  
+ semaphore:
+    1. created 5 threads each running once
+    2. each thread runs a function philospher_utility
+    3. in philospher utility the functions think(),eat(),take_fork(),place_fork() are used
+    4. To ensure syncronization an array of semaphore has been used.
+    5. deadlock has been resolved using semaphore by interchanging the fork the last philosopher picks
+   
+  suace bowl:
+    1. created 5 threads each running once
+    2. each thread runs a function philospher_utility
+    3. in philospher utility the functions think(),eat(),take_fork(),place_fork() are used
+    4. To ensure syncronization an array of semaphore has been used.
+    5. counting semphore used for the bowl
+    6. each time the philospher picks the fork he locks the bowl and eats once finsihed releases the bowl.
+    
+   
