@@ -1,0 +1,15 @@
+Command line takes the argument that is the pid of the process using myint variable
+
+logic:
+    first take the input from the command using the variable myint variable
+    
+    inside the program using find_get_pid followed by  pid_task to find the corresponding task struct related to the process
+    
+    to get the process group id we use pid_vnr(task_pgrp(task))
+    
+    user id of a process is an attribute of task struct we print it using task->cred->uid
+    
+    for the command again it is an attribute of task struct we print it using task->comm
+    
+    
+    
