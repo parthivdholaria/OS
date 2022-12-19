@@ -25,6 +25,8 @@ int main(int argc, char const *argv[])
     struct stat stat_ptr2;
 
 
+    sem_t * lock;
+
 
     if ((shared_mem_fd=shm_open("parthiv",O_RDWR|O_CREAT,0777))<0){
         perror("error in opening shared memory");
@@ -48,6 +50,7 @@ int main(int argc, char const *argv[])
 
     while (i>0)
     {
+        lock=sem_open("sem_lock", 0, 0644, 0);
         j=i;
 
         while (j<i+5)
@@ -69,6 +72,10 @@ int main(int argc, char const *argv[])
 
         }
 
+        sem_post(lock);
+
+        sem_wait(lock);
+
         int largest=50-i+4;
         if ((shared_mem_ptr2=mmap(NULL,bytes_to_be_sent, PROT_WRITE,MAP_SHARED,shared_mem_fd2,0))<0){
                 perror("error in mmap1");
@@ -78,7 +85,8 @@ int main(int argc, char const *argv[])
         sprintf(int_to_str,"%d",largest);
         memcpy(shared_mem_ptr2,int_to_str,sizeof(int_to_str));
         sleep(2);
-    
+
+        sem_post(lock);
     
         i-=5;
         
