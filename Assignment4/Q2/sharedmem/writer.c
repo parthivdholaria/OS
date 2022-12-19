@@ -42,6 +42,9 @@ int main(int argc, char const *argv[])
     int shared_mem_fd2;
     void * shared_mem_ptr2;
 
+
+    sem_t * lock;
+
     shm_unlink("parthiv");
 
     if ((shared_mem_fd=shm_open("parthiv",O_RDWR|O_CREAT,0777))<0){
@@ -79,6 +82,7 @@ int main(int argc, char const *argv[])
 
     while (i<50)
     {
+        lock = sem_open("sem_lock",O_CREAT,0777,0);
         int j=i;
         while (j<i+5){
             random_string_generate(message);
@@ -98,9 +102,11 @@ int main(int argc, char const *argv[])
 
         }
 
-
+        sem_post(lock);
 
         sleep(2);
+
+        sem_wait(lock);
 
 
         if ((shared_mem_ptr2=mmap(NULL,bytes_to_be_sent, PROT_READ,MAP_SHARED,shared_mem_fd2,0))<0){
@@ -110,6 +116,8 @@ int main(int argc, char const *argv[])
 
         write(STDOUT_FILENO,shared_mem_ptr2,stat_ptr2.st_size);
         printf("\n");
+
+        sem_post(lock);
 
         i=i+5;
     }
