@@ -39,7 +39,7 @@ void philosopher_eats(struct philosopher * philosopher){
 
 void philosopher_takesfork(struct philosopher * philosopher){
 
-    pthread_mutex_lock(&lock);
+    // pthread_mutex_lock(&lock);
     printf("philosopher %d picked up the forks %d and %d\n",philosopher->pos+1,(philosopher->pos+4+1)%5,(philosopher->pos+1)%5);   
     ctr++;
     
@@ -50,7 +50,7 @@ void philosopher_takesfork(struct philosopher * philosopher){
 
 void philosopher_puts_back_fork(struct philosopher * philosopher){
 
-    pthread_mutex_unlock(&lock);
+    // pthread_mutex_unlock(&lock);
     printf("philosopher %d has placed the forks %d and %d\n",philosopher->pos+1,(philosopher->pos+5)%5,(philosopher->pos+1)%5);   
 
 }
