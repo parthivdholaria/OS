@@ -21,10 +21,10 @@ int main(int argc, char const *argv[])
     char buffer[512];
 
 
-    if (remove(socket_name)<0 && errno!=ENONET){
-        perror("socket with the name /temp/Q2_socket already exist");
-        exit(0);
-    }
+    // if (remove(socket_name)<0 && errno!=ENONET){
+    //     perror("socket with the name /temp/Q2_socket already exist");
+    //     exit(0);
+    // }
 
     if ((socket_fd=socket(AF_UNIX,SOCK_STREAM,0))<0){
         perror("failed to create the socket on server");
