@@ -32,10 +32,14 @@ static int __init read_struct(void){
 
 	struct_pid = find_get_pid(myint);
 	task = pid_task(struct_pid,PIDTYPE_PID);
+
+	pgid=pid_vnr(task_pgrp(task));
+
+
 	printk(KERN_INFO "process id= %d\n",task->pid);
 	printk(KERN_INFO "process user_id= %d\n",task->cred->uid.val);
 	printk(KERN_INFO "process command path: %s\n",task->comm);
-	printk(KERN_INFO "process group id is= %d\n",task->cred->gid.val);
+	printk(KERN_INFO "process group id is= %d\n",pgid);
 	return 0;
 }
 
