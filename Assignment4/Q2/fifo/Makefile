@@ -5,4 +5,4 @@ all:
 
 
 clean:
-	rm sender reciever fifo_q2
+	rm sender reciever
