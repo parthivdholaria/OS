@@ -12,13 +12,12 @@ int ctr=0;
 
 
 #define count 5
-sem_t fork_arr[5];
+
 pthread_t thread_arr[5];
-pthread_mutex_t lock;
+
 
 struct philosopher {
-    sem_t *leftfork;
-    sem_t *rightfork;
+    
     int pos;
 };
 
@@ -39,7 +38,7 @@ void philosopher_eats(struct philosopher * philosopher){
 
 void philosopher_takesfork(struct philosopher * philosopher){
 
-    // pthread_mutex_lock(&lock);
+
     printf("philosopher %d picked up the forks %d and %d\n",philosopher->pos+1,(philosopher->pos+4+1)%5,(philosopher->pos+1)%5);   
     ctr++;
     
@@ -50,7 +49,6 @@ void philosopher_takesfork(struct philosopher * philosopher){
 
 void philosopher_puts_back_fork(struct philosopher * philosopher){
 
-    // pthread_mutex_unlock(&lock);
     printf("philosopher %d has placed the forks %d and %d\n",philosopher->pos+1,(philosopher->pos+5)%5,(philosopher->pos+1)%5);   
 
 }
@@ -77,18 +75,12 @@ void * philosopher_utility(void * arg){
 int main(int argc, char const *argv[])
 {
     
-    for (int i = 0; i < 5; i++)
-    {
-        sem_init(&fork_arr[i],0,1);
-
-    }
+    
 
     for (int i = 0; i < 5; i++)
     {
         struct philosopher * philosopher = (struct philosopher *) malloc (sizeof(struct philosopher));
         philosopher->pos=i;
-        philosopher->leftfork=&fork_arr[i];
-        philosopher->rightfork=&fork_arr[(i+1)%5];
 
         pthread_create(&thread_arr[i],NULL,philosopher_utility,(void *)philosopher);
         pthread_join(thread_arr[i],NULL);
