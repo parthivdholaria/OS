@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     int socket_fd;
     char buffer[512];
 
-
+    unlink(socket_name);
     // if (remove(socket_name)<0 && errno!=ENONET){
     //     perror("socket with the name /temp/Q2_socket already exist");
     //     exit(0);
